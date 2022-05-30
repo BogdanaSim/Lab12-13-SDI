@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'catalog'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.7.1'
+}
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    implementation 'org.projectlombok:lombok:1.18.20'
+    compileOnly('javax.servlet:javax.servlet-api:4.0.1')
+    implementation project(':core')
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    testImplementation 'org.slf4j:slf4j-simple:1.7.36'
+
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.16.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.16.0'
+    implementation 'org.apache.logging.log4j:log4j-1.2-api:2.16.0'
+    implementation('org.hibernate.validator:hibernate-validator:6.2.3.Final')
+    implementation('org.springframework.data:spring-data-jpa:2.6.4')
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc:2.6.7'
+    implementation('org.springframework.boot:spring-boot-autoconfigure:2.6.7')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa:2.6.7')
+    implementation('org.springframework:spring-jdbc:5.3.19')
+
+    implementation('org.glassfish.jersey.containers:jersey-container-servlet:2.34')
+    implementation('org.glassfish.jersey.media:jersey-media-json-jackson:2.34')
+    implementation('org.glassfish.jersey.inject:jersey-cdi2-se:2.34')
+    implementation('org.jboss.weld.se:weld-se-core:3.1.8.Final')
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.13.2.1')
+    implementation('com.fasterxml.jackson.core:jackson-core:2.13.2')
+    implementation('org.springframework:spring-webmvc:5.3.19')
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    runtimeOnly 'org.postgresql:postgresql:42.3.4'
+}
+
+test {
+    useJUnitPlatform()
+}
+task prepareKotlinBuildScriptModel {
+
+}
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
